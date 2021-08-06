@@ -1,66 +1,36 @@
-# voc2coco
+# Computer Vision-Based Rabbit Deterrence System
 
-This is script for converting VOC format XMLs to COCO format json(ex. coco_eval.json).
+## Project Overview
 
-### Why we need to convert VOC xmls to COCO format json ?
+This is a computer vision based rabbit deterrence system that leverages the Raspberry Pi and Roboflow to detect and scare away rabbits. How it essentially works is the Raspberry Pi has an object detection model trained with Roboflow Train hosted on it and when it detects a Rabbit, the Bluetooth speaker will play a sound such as a baby crying or a car honking which is meant to scare off the rabbit.
 
-We can use COCO API, this is very useful(ex. calculating mAP).
+## Special Features of the System
 
-## How to use
+This system implements a couple of different features including:
 
-### 1. Make labels.txt
+- Trained Model Using Roboflow Train (which is based on YOLOv5, a state-of-the-art object detection model)
+- Uses the MakerHawk External Power Supply (allows for ease of portability)
+- Leverages active learning via the Roboflow Upload API
+- Includes a Flask Web Server, allowing the user to view the detections remotely
+- Integrates a Bluetooth Speaker to scare off the Rabbits
 
-labels.txt if need for making dictionary for converting label to id.
+## Materials/Software Used
 
-**Sample labels.txt**
+**Hardware:**
 
-```txt
-Label1
-Label2
-...
-```
+- A Raspberry Pi
+- [External Power Supply](https://www.amazon.com/MakerHawk-Raspberry-Uninterruptible-Management-Expansion/dp/B082CVWH3R/ref=sr_1_6?crid=3LJGHA055O4VL&dchild=1&keywords=battery+for+raspberry+pi&qid=1623698007&sprefix=battery+for+raspbe%2Caps%2C184&sr=8-6)
+- [Camera for the Pi](https://www.amazon.com/Arducam-Megapixels-Sensor-OV5647-Raspberry/dp/B012V1HEP4/ref=sr_1_6?dchild=1&keywords=Raspberry+Pi+camera&qid=1624689746&sr=8-6)
+- [Bluetooth Speaker](https://www.amazon.com/AUDIOVOX-SP881BL-Portable-Bluetooth-Rechargeable/dp/B07F8N6KJ9/ref=sr_1_4?crid=2363N4JZD3B18&dchild=1&keywords=canz+bluetooth+speaker&qid=1626056945&sprefix=CANZ+bluetoot%2Caps%2C173&sr=8-4)
 
-### 2. Run script
+**Software:**
 
-##### 2.1 Usage 1(Use ids list)
+- [Public Dataset](https://public.roboflow.com/object-detection/eastern-cottontail-rabbits)
+- [Roboflow Annotate](https://docs.roboflow.com/annotate)
+- [Roboflow Train](https://docs.roboflow.com/train)
+- [Roboflow Inference API](https://docs.roboflow.com/inference)
 
-```bash
-$ python voc2coco.py \
-    --ann_dir /path/to/annotation/dir \
-    --ann_ids /path/to/annotations/ids/list.txt \
-    --labels /path/to/labels.txt \
-    --output /path/to/output.json \
-    <option> --ext xml
-```
+## Further Reading
 
-
-##### 2.2 Usage 2(Use annotation paths list)
-
-```bash
-$ python voc2coco.py \
-    --ann_paths_list /path/to/annotation/paths.txt \
-    --labels /path/to/labels.txt \
-    --output /path/to/output.json \
-    <option> --ext xml
-```
-
-### 3. Example of usage
-
-In this case, you can convert [Shenggan/BCCD_Dataset: BCCD Dataset is a small-scale dataset for blood cells detection.](https://github.com/Shenggan/BCCD_Dataset) by this script.
-
-```bash
-$ python voc2coco.py \                                                                                                                                              金  5/24 20:14:59 2019
-    --ann_dir sample/Annotations \
-    --ann_ids sample/dataset_ids/test.txt \
-    --labels sample/labels.txt \
-    --output sample/bccd_test_cocoformat.json \
-    --ext xml
-
-# Check output
-$ ls sample/ | grep bccd_test_cocoformat.json                                                                                                                    金  5/24 20:16:09 2019
-bccd_test_cocoformat.json
-
-# Check output
-cut -f -4 -d , sample/bccd_test_cocoformat.json                                                                                                                金  5/24 20:20:49 2019
-{"images": [{"file_name": "BloodImage_00007.jpg", "height": 480, "width": 640, "id": "BloodImage_00007"}
-```
+- Blog: [https://blog.roboflow.com/rabbit-deterrence-system/](https://blog.roboflow.com/rabbit-deterrence-system/)
+- Video Documentation: [https://www.youtube.com/watch?v=oPvqKgq3ppc](https://www.youtube.com/watch?v=oPvqKgq3ppc)
